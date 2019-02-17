@@ -1,5 +1,5 @@
 #pragma once
-
+// Random comment to diff this file
 //---------------------Classes------------------------
 class HelperFunctions;
 class Item;
