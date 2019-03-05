@@ -280,6 +280,135 @@ TEST(HelperFunctions,caseTest){
   EXPECT_STRNE(letters,"abc0ef\0");
 
 }
+
+/*Trying to pick up a monster will fail,
+and the bag will remain the same*/
+TEST(PlayerPick, PickMonsterUp){
+
+  	const int numTreasure = 15;
+  	char buffer[50];
+    Room * room = new Room();
+    Player * playa = new Player("Steve", room);
+    Treasure* stuff[numTreasure];
+    bool f = false;
+    Weapon * dummyWeapon = new Weapon("paradox");
+    Monster * dummy = new Monster("Steve's mom",dummyWeapon);
+
+    room->setItemsPresent(0,dummyWeapon);
+    room->setMonsterPresent(dummy);
+
+    EXPECT_TRUE(playa->isBagEmpty());
+    playa->Pick("Steve's mom"); // should not be able to pick  monster
+    EXPECT_TRUE(playa->isBagEmpty());
+
+    free(room);
+    free(playa);
+    for(int i=0;i< numTreasure;i++){
+      delete stuff[i];
+    }
+    free(dummy);
+    free(dummyWeapon);
+
+}
+/*should fail becasue the indicated item is not There*/
+TEST(PlayerPick,TreasureNotThere){
+  Room * room = new Room();
+  Player * playa = new Player("Steve", room);
+  Weapon * dummyTreaure = new Treasure("paradox",9999);
+
+
+    EXPECT_TRUE(playa->isBagEmpty());
+    playa->Pick("paradox"); // should not be able to pick  monster
+    EXPECT_TRUE(playa->isBagEmpty());
+    // nothing changed cause item not in room
+
+
+    free(room);
+    free(playa);
+    free(dummyWeapon);
+}
+/*should fail becasue the indicated item is not There*/
+TEST(PlayerPick,WeaponNotThere){
+  Room * room = new Room();
+  Player * playa = new Player("Steve", room);
+  Weapon * dummyWeapon = new Weapon("paradox");
+
+
+    EXPECT_TRUE(playa->isBagEmpty());
+    playa->Pick("paradox"); // should not be able to pick  monster
+    EXPECT_TRUE(playa->isBagEmpty());
+    // nothing changed cause item not in room
+
+
+    free(room);
+    free(playa);
+    free(dummyWeapon);
+}
+
+/* after having something in the bag, we should not be able
+to drop a monster*/
+TEST(PlayerDrop,dropMonster){
+
+    	const int numTreasure = 15;
+    	char buffer[50];
+      Room * room = new Room();
+      Player * playa = new Player("Steve", room);
+      Treasure* stuff[numTreasure];
+      bool f = false;
+      Weapon * dummyWeapon = new Weapon("paradox");
+      Monster * dummy = new Monster("Steve's mom",dummyWeapon);
+
+      room->setItemsPresent(0,dummyWeapon);
+      room->setMonsterPresent(dummy);
+
+      EXPECT_TRUE(playa->isBagEmpty());
+      playa->Pick("paradox"); // should not be able to pick  monster
+      EXPECT_FALSE(playa->isBagEmpty());
+      playa->Drop("Steve's mom");
+      EXPECT_FALSE(playa->isBagEmpty());
+
+      free(room);
+      free(playa);
+      for(int i=0;i< numTreasure;i++){
+        delete stuff[i];
+      }
+      free(dummy);
+      free(dummyWeapon);
+
+}
+/* after having something in the bag, we should not be able
+to drop a monster EVEN if its dead*/
+TEST(PlayerDrop,dropMonsterIfDead){
+
+    	const int numTreasure = 15;
+    	char buffer[50];
+      Room * room = new Room();
+      Player * playa = new Player("Steve", room);
+      Treasure* stuff[numTreasure];
+      bool f = false;
+      Weapon * dummyWeapon = new Weapon("paradox");
+      Monster * dummy = new Monster("Steve's mom",dummyWeapon);
+
+      room->setItemsPresent(0,dummyWeapon);
+      room->setMonsterPresent(dummy);
+
+      EXPECT_TRUE(playa->isBagEmpty());
+      playa->Pick("paradox"); // should not be able to pick  monster
+      EXPECT_FALSE(playa->isBagEmpty());
+      EXPECT_TRUE(playa->Attack("Steve's Mom"));
+      playa->Drop("Steve's mom");
+      EXPECT_FALSE(playa->isBagEmpty());
+
+      free(room);
+      free(playa);
+      for(int i=0;i< numTreasure;i++){
+        delete stuff[i];
+      }
+      free(dummy);
+      free(dummyWeapon);
+
+}
+
 //-----------------------END------------------------
 //---------------------Player------------------------
 
