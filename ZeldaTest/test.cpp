@@ -289,7 +289,6 @@ TEST(PlayerPick, PickMonsterUp){
   	char buffer[50];
     Room * room = new Room();
     Player * playa = new Player("Steve", room);
-    Treasure* stuff[numTreasure];
     bool f = false;
     Weapon * dummyWeapon = new Weapon("paradox");
     Monster * dummy = new Monster("Steve's mom",dummyWeapon);
@@ -303,9 +302,6 @@ TEST(PlayerPick, PickMonsterUp){
 
     free(room);
     free(playa);
-    for(int i=0;i< numTreasure;i++){
-      delete stuff[i];
-    }
     free(dummy);
     free(dummyWeapon);
 
@@ -314,7 +310,7 @@ TEST(PlayerPick, PickMonsterUp){
 TEST(PlayerPick,TreasureNotThere){
   Room * room = new Room();
   Player * playa = new Player("Steve", room);
-  Weapon * dummyTreaure = new Treasure("paradox",9999);
+  Treasure * dummyTreasure = new Treasure("paradox",9999);
 
 
     EXPECT_TRUE(playa->isBagEmpty());
@@ -325,7 +321,7 @@ TEST(PlayerPick,TreasureNotThere){
 
     free(room);
     free(playa);
-    free(dummyWeapon);
+    free(dummyTreasure);
 }
 /*should fail becasue the indicated item is not There*/
 TEST(PlayerPick,WeaponNotThere){
@@ -344,6 +340,26 @@ TEST(PlayerPick,WeaponNotThere){
     free(playa);
     free(dummyWeapon);
 }
+/*should fail becasue the indicated item is not There,
+but another weapon is there instead.*/
+TEST(PlayerPick, WeaponThereButNotThatOne) {
+	Room * room = new Room();
+	Player * playa = new Player("Steve", room);
+	Weapon * dummyWeapon = new Weapon("paradox");
+	Weapon * aWeapon = new Weapon("junk");
+
+	room->setItemsPresent(0, aWeapon);
+	EXPECT_TRUE(playa->isBagEmpty());
+	playa->Pick("paradox"); // should not be able to pick  monster
+	EXPECT_TRUE(playa->isBagEmpty());
+	// nothing changed cause item not in room
+
+
+	free(room);
+	free(aWeapon);
+	free(playa);
+	free(dummyWeapon);
+}
 
 /* after having something in the bag, we should not be able
 to drop a monster*/
@@ -353,7 +369,6 @@ TEST(PlayerDrop,dropMonster){
     	char buffer[50];
       Room * room = new Room();
       Player * playa = new Player("Steve", room);
-      Treasure* stuff[numTreasure];
       bool f = false;
       Weapon * dummyWeapon = new Weapon("paradox");
       Monster * dummy = new Monster("Steve's mom",dummyWeapon);
@@ -362,16 +377,13 @@ TEST(PlayerDrop,dropMonster){
       room->setMonsterPresent(dummy);
 
       EXPECT_TRUE(playa->isBagEmpty());
-      playa->Pick("paradox"); // should not be able to pick  monster
+      playa->Pick("paradox");// pic up dummy item to have space in inventory
       EXPECT_FALSE(playa->isBagEmpty());
       playa->Drop("Steve's mom");
       EXPECT_FALSE(playa->isBagEmpty());
 
       free(room);
       free(playa);
-      for(int i=0;i< numTreasure;i++){
-        delete stuff[i];
-      }
       free(dummy);
       free(dummyWeapon);
 
@@ -384,7 +396,6 @@ TEST(PlayerDrop,dropMonsterIfDead){
     	char buffer[50];
       Room * room = new Room();
       Player * playa = new Player("Steve", room);
-      Treasure* stuff[numTreasure];
       bool f = false;
       Weapon * dummyWeapon = new Weapon("paradox");
       Monster * dummy = new Monster("Steve's mom",dummyWeapon);
@@ -400,14 +411,103 @@ TEST(PlayerDrop,dropMonsterIfDead){
       EXPECT_FALSE(playa->isBagEmpty());
 
       free(room);
-      free(playa);
-      for(int i=0;i< numTreasure;i++){
-        delete stuff[i];
-      }
+	  free(playa);
       free(dummy);
       free(dummyWeapon);
 
 }
+/*picking up and trying to drop the item twice in a row should not
+bugg out, but refuse dropping it a second time.*/
+TEST(PlayerDrop,PickDropDrop){
+
+    	const int numTreasure = 15;
+    	char buffer[50];
+      Room * room = new Room();
+      Player * playa = new Player("Steve", room);
+      bool f = false;
+      Weapon * dummyWeapon = new Weapon("paradox");
+
+      room->setItemsPresent(0,dummyWeapon);
+
+      EXPECT_TRUE(playa->isBagEmpty());
+      playa->Pick("paradox"); // should not be able to pick  monster
+      EXPECT_FALSE(playa->isBagEmpty());
+      playa->Drop("paradox");
+      EXPECT_TRUE(playa->isBagEmpty());
+      playa->Drop("paradox");
+      EXPECT_TRUE(playa->isBagEmpty());
+
+
+
+      free(room);
+	    free(playa);
+      free(dummyWeapon);
+
+}
+	/*should have no problems picking up adn dropping items with same name
+	and different type, weapon/treasure. */
+	TEST(PlayerDrop, PicknDropSameNameDifferentType) {
+
+		const int numTreasure = 15;
+		char buffer[50];
+		Room * room = new Room();
+		Player * playa = new Player("Steve", room);
+		bool f = false;
+		Weapon * dummyWeapon = new Weapon("paradox");
+		Treasure * dummyTreasure = new Treasure("paradox", 5555);
+
+		room->setItemsPresent(0, dummyWeapon);
+		room->setItemsPresent(1, dummyTreasure);
+
+		EXPECT_TRUE(playa->isBagEmpty());
+		playa->Pick("paradox"); // should not be able to pick  monster
+		playa->Pick("paradox"); // should be abel to pick up both items.
+		EXPECT_FALSE(playa->isBagEmpty());
+
+		playa->Drop("paradox");
+		EXPECT_FALSE(playa->isBagEmpty());
+		playa->Drop("paradox");
+		EXPECT_TRUE(playa->isBagEmpty());
+
+
+		free(room);
+		free(playa);
+		free(dummyWeapon);
+		free(dummyTreasure);
+
+	}
+	/*should have no problems picking up adn dropping items with same name
+	and same kind of treasure e. */
+	TEST(PlayerDrop, PicknDropSameNameSameType) {
+
+		const int numTreasure = 15;
+		char buffer[50];
+		Room * room = new Room();
+		Player * playa = new Player("Steve", room);
+		bool f = false;
+		Treasure * dummyTreasure = new Treasure("paradox", 5000);
+		Treasure * dummyTreasure1 = new Treasure("paradox", 5000);
+
+		room->setItemsPresent(0, dummyTreasure1);
+		room->setItemsPresent(1, dummyTreasure);
+
+		EXPECT_TRUE(playa->isBagEmpty());
+		playa->Pick("paradox"); // should not be able to pick  monster
+		playa->Pick("paradox"); // should be abel to pick up both items.
+		EXPECT_FALSE(playa->isBagEmpty());
+
+		playa->Drop("paradox");
+		EXPECT_FALSE(playa->isBagEmpty());
+		playa->Drop("paradox");
+		EXPECT_TRUE(playa->isBagEmpty());
+
+
+		free(room);
+		free(playa);
+		free(dummyTreasure1);
+		free(dummyTreasure);
+
+	}
 
 //-----------------------END------------------------
 //---------------------Player------------------------

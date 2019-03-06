@@ -234,10 +234,10 @@ private:
 
 	//Utility Functions
 
+public:
+	
 	bool isBagEmpty();
 	bool isBagFull();
-
-public:
 
 	Player();
 	~Player();
