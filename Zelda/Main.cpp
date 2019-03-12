@@ -1,6 +1,5 @@
 #include "pch.h"
-#include <windows.h>
-#include "Zelda.h"
+#include "Main.h"
 
 int main()
 {

@@ -1,46 +1,8 @@
 #include "pch.h"
-#include "Zelda.h"
-
-#include <iostream>
-#include <windows.h>
-#include <cstdlib>
-#include <fstream>
-
-using namespace std;
-
-/*Some COLOR Constants*/
-const int RED = 12;
-const int PURPLE = 13;
-const int GREEN = 10;
-const int AQUA = 11;
-const int YELLOW = 14;
-const int WHITE = 15;
-const int BLUE = 9;
-
+#include "Main.h"
 
 //---------------------Helper Functions------------------------
 
-
-
-void HelperFunctions::charactersCase(char* input)
-{
-	for (int i = 0; input[i]!='\0'; ++i)
-	{
-		if(input[i] >= 'a' && input[i] <= 'z')
-		{
-			input[i] = input[i] - 32;
-		}
-	}
-}
-
-
-
-void HelperFunctions::color(int k)
-{
-	HANDLE  hConsole;
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hConsole, k);
-}
 
 
 
@@ -56,7 +18,7 @@ Item::Item()
 
 Item::~Item()
 {
-	if(name)
+	if (name)
 		delete[] name;
 }
 
@@ -66,7 +28,6 @@ char* Item::getItemName()
 {
 	return name;
 }
-
 
 
 //---------------------Treasure------------------------
