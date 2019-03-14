@@ -93,7 +93,7 @@ TEST(PlayerAttackMechanic,PlayerAttackWithWeaponAndMonster) {
   Room * room = new Room();
   Weapon * dummyWeapon = new Weapon("paradox");
   Player * playa = new Player("Steve", room );
-  Monster * dummy = new Monster("Steves mom",dummyWeapon);
+  Monster * dummy = new Monster("Steve's mom",dummyWeapon);
   room->setItemsPresent(0,dummyWeapon);
   playa->Pick("paradox");
 
@@ -116,7 +116,7 @@ TEST(PlayerAttackMechanic,PlayerAttackTwiceWithWeaponAndMonster) {
   Room * room = new Room();
   Weapon * dummyWeapon = new Weapon("paradox");
   Player * playa = new Player("Steve", room );
-  Monster * dummy = new Monster("Steves mom",dummyWeapon);
+  Monster * dummy = new Monster("Steve's mom",dummyWeapon);
   room->setItemsPresent(0,dummyWeapon);
   playa->Pick("paradox");
   room->setMonsterPresent(dummy);
