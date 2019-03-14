@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include "pch.h"
 
 #include "HelperFunctions.h"

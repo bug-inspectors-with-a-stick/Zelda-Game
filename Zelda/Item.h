@@ -11,8 +11,8 @@ public:
 	Item();
 	~Item();
 
-	inline char* getItemName();
-	inline virtual int getWorth() = 0;
+	char* getItemName();
+	virtual int getWorth() = 0;
 
 
 };

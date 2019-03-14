@@ -2,6 +2,7 @@
 #include "../Zelda/Zelda.cpp"
 
 #include "../Zelda/HelperFunctions.cpp"
+#include "../Zelda/Item.cpp"
 
 TEST(TestCaseName, TestName) {
   EXPECT_EQ(1, 1);
