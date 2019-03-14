@@ -741,7 +741,7 @@ TEST(TreasureCreation, NoInput) {
 TEST(TreasureCreation, WhiteSpace) {
 	Treasure* treasure = new Treasure("		", 0);
 
-	EXPECT_STREQ("	", treasure->getItemName());
+	EXPECT_STREQ("		", treasure->getItemName());
 
 	delete treasure;
 }
@@ -773,7 +773,7 @@ TEST(TreasureCreation, HugeWorth) {
 TEST(TreasureCreation, FractionalWorth) {
 	Treasure* treasure = new Treasure("The Holy Grail", 0.5);
 
-	EXPECT_EQ(0.5, treasure->getWorth());
+	EXPECT_EQ(0.0, treasure->getWorth());
 
 	delete treasure;
 }
