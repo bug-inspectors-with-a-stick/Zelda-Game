@@ -31,7 +31,7 @@ const int YELLOW = 14;
 const int WHITE = 15;
 const int BLUE = 9;
 
-class HelperFunctions;
+/*class HelperFunctions;
 class Item;
 class Treasure;
 class Weapon;
@@ -40,4 +40,4 @@ class Princess;
 class Player;
 class Room;
 class Castle;
-class Game;
+class Game;*/
