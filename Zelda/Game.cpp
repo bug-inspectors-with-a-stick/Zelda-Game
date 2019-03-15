@@ -32,7 +32,7 @@ Game::Game()
 	//Code to get the name of the Player
 	char username[20];
 	HelperFunctions::color(YELLOW);
-	cout << "Enter your name : ";
+	cout << "Enter your name: ";
 	cin.getline(username, 20);
 
 
@@ -162,13 +162,13 @@ void Game::Ending() {
 	int cash = playerPtr->getCash();
 	cout << "You have " << cash << " Gold!" << endl;
 	if (cash >= 2000) {
-		cout << "WOW!You collected all the treasure in castle and you are so rich now! You married with Princess and set up a kingdom with her in Europe!" << endl;
+		cout << "You collected all the treasure in castle and are unfathomably rich! You marry the princess and rule over the kingdom of CPeria for the rest of your long life." << endl;
 	}
 	else if (cash >= 500) {
-		cout << "You collect some treasure but not all of them. You brought Princess back to hometown. You sold your weapon, aramor and treasure. You enjoyed the rest of your life with Pirncess as a oridiany man" << endl;
+		cout << "You collected some treasure from the castle. You brought Princess back to her kingdom. You sold your weapons, armour and treasure. You enjoyed the rest of your life with Princess as a oridiany man." << endl;
 	}
 	else {
-		cout << "You did not bring any treasure out of the castle. You cannot pay for the Ship ticket back to your home. Instead, you sneak into a random ship with princess. However,the destination of this ship is the Wonderland North Koera. You spent the rest of your life as a labor" << endl;
+		cout << "You did not bring any treasure out of the castle. You cannot pay for the Ship ticket back to your home. Instead, you sneak into a random ship with princess. However, the destination of this ship is the Wonderland North Koera. You spent the rest of your life as a slave." << endl;
 	}
 
 }
@@ -195,7 +195,7 @@ void Game::Play()
 	do
 	{
 		HelperFunctions::color(YELLOW);
-		cout << "\n\nWhat do you want to do : ";
+		cout << "\n\nEnter a Command: ";
 
 		char fullCommand[30];
 		cin.getline(fullCommand, 30);
@@ -224,7 +224,7 @@ void Game::Play()
 		{
 			while (round == 1 && strcmp(command, "WEST") == 0) {//make sure user does not move west and quit game at first round
 				int choice;
-				cout << "Are you sure you want to move west and quit this game?(1.Yes 2.No)" << endl;
+				cout << "Are you sure you want to move west and quit this game? (1. Yes, 2. No): " << endl;
 				cin >> choice;
 				cin.ignore(256, '\n');
 				cin.clear();
@@ -232,7 +232,7 @@ void Game::Play()
 					break;
 				}
 				else {
-					cout << "Please input direction again(South,East)" << endl;//ask user to input direction again
+					cout << "Please input direction again (South, East): " << endl;//ask user to input direction again
 					cin >> command;
 					cin.ignore(256, '\n');
 					cin.clear();
@@ -275,7 +275,7 @@ void Game::Play()
 		else
 		{
 			HelperFunctions::color(RED);
-			cout << "\nINVALID COMMAND . Please enter a Valid Command .";
+			cout << "\nINVALID COMMAND. Please enter a Valid Command.";
 		}
 		round++;//increase the round number
 	} while (playerPtr->getCurrentState() && !exit_Castle && (strcmp(functionName, "EXIT") != 0));
