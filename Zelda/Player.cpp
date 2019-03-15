@@ -140,13 +140,13 @@ bool Player::Move(char const* direction, bool& exit_Castle)
 		if (current_Room->getPrincessPresent())
 		{
 			HelperFunctions::color(AQUA);
-			cout << "The Princess is standing , waiting for you in the dark . ";
+			cout << "The Princess is standing in the room, waiting for you in the dark.\n";
 			princess_Pointer = current_Room->getPrincessPresent();
 			current_Room->setPrincessPresent(nullptr);
 		}
 
 		HelperFunctions::color(RED);
-		cout << "\nYou have successfully been moved to Room : " << current_Room->getRoomNumber();
+		cout << "\nYou have successfully been moved to Room: " << current_Room->getRoomNumber();
 	}
 	else {
 		HelperFunctions::color(RED);
@@ -192,17 +192,17 @@ void Player::Pick(char const* itemName)
 					CashUpdater();
 				}
 				else
-					cout << "\nSorry , your bag is already full.";
+					cout << "\nYour bag is already full.";
 			}
 		}
 	}
 
 	HelperFunctions::color(RED);
 	if (picked)
-		cout << endl << itemName << " has successfully been picked.";
+		cout << endl << itemName << " has successfully been picked up.\n";
 
 	else if (itemFound == false)
-		cout << endl << itemName << " is not present in this room.";
+		cout << endl << itemName << " is not present in this room.\n";
 }
 
 
@@ -240,7 +240,7 @@ void Player::Drop(char const* itemName)
 				else
 				{
 					HelperFunctions::color(AQUA);
-					cout << "/n/The item" << itemName << " couldn't be dropped as Room " << current_Room->getRoomNumber()
+					cout << "\nThe item" << itemName << " couldn't be dropped as Room " << current_Room->getRoomNumber()
 						<< " is already full.";
 				}
 			}
@@ -250,10 +250,10 @@ void Player::Drop(char const* itemName)
 	HelperFunctions::color(YELLOW);
 
 	if (dropped)
-		cout << endl << itemName << " has successfully been dropped.";
+		cout << endl << itemName << " has successfully been dropped.\n";
 
 	else if (item_in_bag == false)
-		cout << endl << itemName << " couldn't be dropped as it is not present in your bag.";
+		cout << endl << itemName << " couldn't be dropped as it is not present in your bag.\n";
 }
 
 
@@ -274,7 +274,7 @@ bool Player::Attack(char const* monsterName)
 				{
 					(current_Room->getMonsterPresent())->setLivingState(false);
 					HelperFunctions::color(RED);
-					cout << monsterName << " has been killed . ";
+					cout << monsterName << " has been killed.\n";
 
 					killed = true;
 				}
@@ -284,17 +284,17 @@ bool Player::Attack(char const* monsterName)
 			{
 				setCurrentState(false);
 				HelperFunctions::color(RED);
-				cout << "/nYour bag doesn't contain the Weapon required to kill " << monsterName;
+				cout << "\nYour bag doesn't contain the Weapon required to kill " << monsterName << ".\n";
 			}
 		}
 
 		else if ((((current_Room->getMonsterPresent())->getLivingState()) == false))
-			cout << endl << monsterName << " is already dead.";
+			cout << endl << monsterName << " is already dead.\n";
 
 	}
 
 	else
-		cout << endl << monsterName << " is not present in this room.";
+		cout << endl << monsterName << " is not present in this room.\n";
 
 	return killed;
 }
@@ -304,40 +304,40 @@ bool Player::Attack(char const* monsterName)
 void Player::Look()
 {
 	HelperFunctions::color(RED);
-	cout << "\nCurrently you are in Room " << current_Room->getRoomNumber() << ". ";
-	cout << current_Room->getDescription();
+	cout << "\nCurrently you are in Room " << current_Room->getRoomNumber() << ".\n";
+	cout << current_Room->getDescription() << "\n";
 
 	for (int i = 0; i < 4; ++i)
 	{
 		HelperFunctions::color(AQUA);
 		if ((current_Room->getPaths())[i] != NULL)
-			cout << " There is a room to your " << current_Room->directionName(i) << " .";
+			cout << "There is a room to your " << current_Room->directionName(i) << ".\n";
 	}
 
 	for (int i = 0; i < 5; ++i)
 	{
 		HelperFunctions::color(WHITE);
 		if ((current_Room->getItemsPresent())[i] != NULL)
-			cout << " The " << ((current_Room->getItemsPresent())[i])->getItemName() << " is lying on the floor .";
+			cout << "The " << ((current_Room->getItemsPresent())[i])->getItemName() << " is lying on the floor.\n";
 	}
 
 	if (current_Room->getMonsterPresent() != NULL)
 	{
 		HelperFunctions::color(RED);
 		if ((current_Room->getMonsterPresent())->getLivingState() == true)
-			cout << (current_Room->getMonsterPresent())->getMonsterName() << " is waiting to kill you beside a locked door.";
+			cout << (current_Room->getMonsterPresent())->getMonsterName() << " is waiting to kill you beside a locked door.\n";
 		else
-			cout << (current_Room->getMonsterPresent())->getMonsterName() << " is lying dead on the floor.";
+			cout << (current_Room->getMonsterPresent())->getMonsterName() << " is lying dead on the floor.\n";
 	}
 
 	HelperFunctions::color(PURPLE);
 	if (princess_Pointer) {
-		cout << " You have Princess along with you .";
+		cout << "You have Princess with you.\n";
 		princess_Pointer->setAlongState(true);
 	}
 
 	HelperFunctions::color(GREEN);
-	cout << "\nYour bag contains the following items : ";
+	cout << "\nYour bag contains the following items: ";
 
 
 	if (!isBagEmpty())
@@ -352,7 +352,7 @@ void Player::Look()
 		cout << "\nCurrently, your bag is empty.";
 
 	HelperFunctions::color(BLUE);
-	cout << "\nCurrent Cash is : " << getCash();
+	cout << "\nCurrent Cash is: " << getCash();
 }
 
 
@@ -360,5 +360,5 @@ void Player::Look()
 void Player::Exit()
 {
 	HelperFunctions::color(WHITE);
-	cout << "Thankyou " << getPlayerName() << " for playing Zelda.\nThe game is now exiting .........";
+	cout << "Thank you " << getPlayerName() << " for playing Zelda.\nThe game is now exiting.\n";
 }
