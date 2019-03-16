@@ -9,6 +9,7 @@ Game::Game()
 	itemsPtr[2] = new Treasure("PROOF", 1000);
 	itemsPtr[3] = new Weapon("SHIELD");
 	itemsPtr[4] = new Weapon("DAGGER");
+	itemsPtr[5] = new Treasure("Shiny Piece of Metal",1234);
 
 
 	//Creating Monsters for the Game
@@ -44,7 +45,7 @@ Game::Game()
 
 Game::~Game()
 {
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < NUMBER_ITEMS; ++i)
 	{
 		delete itemsPtr[i];
 	}
@@ -266,10 +267,14 @@ void Game::Play()
 				// this bug assumes that the command was correct
 				castlePtr->HiddenRoomsUnlocker(status, monstersPtr);
 				// castlePtr->HiddenRoomsUnlocker(command, monstersPtr);
-
 			}
 			else if (playerPtr->getCurrentState() == false)
 				PlayerDead();
+		}
+		else if (strcmp(functionName, "INSPECT") == 0){
+			if(playerPtr->tryUnlockPassage()){
+				castlePtr->HiddenRoomsUnlocker("Catacombs", monstersPtr);
+			}
 		}
 
 		else if (strcmp(functionName, "EXIT") == 0)

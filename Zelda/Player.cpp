@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Player.h"
+#include "Game.h"
 
 Player::Player(char const* player_Name, Room* room1)
 {
@@ -10,6 +11,7 @@ Player::Player(char const* player_Name, Room* room1)
 	princess_Pointer = nullptr;
 	is_Alive = true;
 	cash = 0;
+	hasDiscoveredShortcut=true;
 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -167,7 +169,7 @@ void Player::Pick(char const* itemName)
 	bool picked = false;
 	bool itemFound = false;
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < NUMBER_ITEMS; ++i)
 	{
 		if ((current_Room->getItemsPresent())[i] != nullptr)
 		{
@@ -256,7 +258,26 @@ void Player::Drop(char const* itemName)
 		cout << endl << itemName << " couldn't be dropped as it is not present in your bag.\n";
 }
 
+bool Player::tryUnlockPassage(){
+	const char * unlocker= "Shiny Piece of Metal";
+	for (int i = 0; i < NUMBER_ITEMS; ++i)
+	{
+		if ((current_Room->getItemsPresent())[i] != nullptr)
+		{
+			if (strcmp((((current_Room->getItemsPresent())[i])->getItemName()), unlocker) == 0)
+			{
+				cout << "Inspecting the " << unlocker << "revealed a Secret passage way!" <<endl;
+				return true;
+			}
+		}
+	}
+	cout << "\n Im not sure what you are talking about " << endl;
+	return false;
 
+}
+bool Player::canUsePassage(){
+	return hasDiscoveredShortcut;
+}
 
 
 /* returns the name of the monster the player has slayed or

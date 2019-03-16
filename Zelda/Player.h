@@ -46,6 +46,7 @@ public:
 	void			Look();
 	const char *	Attack(char const*);
 	void			Exit();
-
+	bool tryUnlockPassage();
+	bool canUsePassage();
 
 };
