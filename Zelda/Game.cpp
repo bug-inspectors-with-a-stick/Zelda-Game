@@ -260,9 +260,13 @@ void Game::Play()
 
 		else if (strcmp(functionName, "ATTACK") == 0)
 		{
-			if (playerPtr->Attack(command))
+			const char * status = playerPtr->Attack(command);
+			if (status != NULL)
 			{
-				castlePtr->HiddenRoomsUnlocker(command, monstersPtr);
+				// this bug assumes that the command was correct
+				castlePtr->HiddenRoomsUnlocker(status, monstersPtr);
+				// castlePtr->HiddenRoomsUnlocker(command, monstersPtr);
+
 			}
 			else if (playerPtr->getCurrentState() == false)
 				PlayerDead();

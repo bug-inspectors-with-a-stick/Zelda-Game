@@ -259,12 +259,15 @@ void Player::Drop(char const* itemName)
 
 
 
+/* returns the name of the monster the player has slayed or
+returns null, meaning failuer.
 
-bool Player::Attack(char const* monsterName)
+*/
+const char * Player::Attack(char const* monsterName)
 {
-	bool killed = false;
-
-	if (current_Room->getMonsterPresent() != nullptr && strcmp(monsterName, current_Room->getMonsterPresent()->getMonsterName()) == 0)
+	char * killed = NULL;
+	//&& strcmp(monsterName, current_Room->getMonsterPresent()->getMonsterName()) == 0
+	if (current_Room->getMonsterPresent() != nullptr)
 	{
 		if (((current_Room->getMonsterPresent())->getLivingState()) == true)
 		{
@@ -274,13 +277,13 @@ bool Player::Attack(char const* monsterName)
 				{
 					(current_Room->getMonsterPresent())->setLivingState(false);
 					HelperFunctions::color(RED);
-					cout << monsterName << " has been killed.\n";
+					cout << current_Room->getMonsterPresent()->getMonsterName() << " has been killed.\n";
 
-					killed = true;
+					killed = current_Room->getMonsterPresent()->getMonsterName();
 				}
 			}
 
-			if (killed == false)
+			if (killed == NULL )
 			{
 				setCurrentState(false);
 				HelperFunctions::color(RED);
