@@ -259,19 +259,19 @@ void Player::Drop(char const* itemName)
 }
 
 bool Player::tryUnlockPassage(){
-	const char * unlocker= "Shiny Piece of Metal";
+	const char * unlocker= "SHINY PIECE OF METAL";
 	for (int i = 0; i < NUMBER_ITEMS; ++i)
 	{
 		if ((current_Room->getItemsPresent())[i] != nullptr)
 		{
 			if (strcmp((((current_Room->getItemsPresent())[i])->getItemName()), unlocker) == 0)
 			{
-				cout << "Inspecting the " << unlocker << "revealed a Secret passage way!" <<endl;
+				cout << "Inspecting the " << unlocker << " revealed a Secret passage way!" <<endl;
 				return true;
 			}
 		}
 	}
-	cout << "\n Im not sure what you are talking about " << endl;
+	cout << "\nI'm not sure what you are talking about." << endl;
 	return false;
 
 }

@@ -9,7 +9,7 @@ Game::Game()
 	itemsPtr[2] = new Treasure("PROOF", 1000);
 	itemsPtr[3] = new Weapon("SHIELD");
 	itemsPtr[4] = new Weapon("DAGGER");
-	itemsPtr[5] = new Treasure("Shiny Piece of Metal",1234);
+	itemsPtr[5] = new Treasure("SHINY PIECE OF METAL", 1234);
 
 
 	//Creating Monsters for the Game
@@ -189,7 +189,7 @@ void Game::Play()
 	cout << "\n\n\n";
 	displayStory();
 
-	char functionName[30];
+	char functionName[50];
 	bool exit_Castle = false;
 	playerPtr->Look();
 	int round = 1;//keep tracking the round
@@ -198,14 +198,14 @@ void Game::Play()
 		HelperFunctions::color(YELLOW);
 		cout << "\n\nEnter a Command: ";
 
-		char fullCommand[30];
-		cin.getline(fullCommand, 30);
+		char fullCommand[50];
+		cin.getline(fullCommand, 50);
 
 		//Converting all the characters of fullCommand to UpperCase
 		HelperFunctions::charactersCase(fullCommand);
 
 
-		char command[15];
+		char command[25];
 
 		int i = 0;
 
@@ -218,7 +218,7 @@ void Game::Play()
 
 		//Check for LOOK and EXIT Command's Case
 		if (strlen(functionName) != strlen(fullCommand))
-			strcpy_s(command, 15, fullCommand + i + 1);
+			strcpy_s(command, 25, fullCommand + i + 1);
 
 
 		if (strcmp(functionName, "MOVE") == 0)
