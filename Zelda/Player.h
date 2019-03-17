@@ -21,7 +21,7 @@ private:
 	int  cash;
 
 	//Utility Functions
-
+	bool hasDiscoveredShortcut;
 	bool isBagEmpty();
 	bool isBagFull();
 
@@ -44,8 +44,9 @@ public:
 	void			Pick(char const*);
 	void			Drop(char const*);
 	void			Look();
-	bool			Attack(char const*);
+	const char *	Attack(char const*);
 	void			Exit();
-
+	bool tryUnlockPassage();
+	bool canUsePassage();
 
 };

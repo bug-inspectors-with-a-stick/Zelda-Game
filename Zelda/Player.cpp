@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Player.h"
+#include "Game.h"
 
 Player::Player(char const* player_Name, Room* room1)
 {
@@ -10,6 +11,7 @@ Player::Player(char const* player_Name, Room* room1)
 	princess_Pointer = nullptr;
 	is_Alive = true;
 	cash = 0;
+	hasDiscoveredShortcut=true;
 
 	for (int i = 0; i < 10; ++i)
 	{
@@ -167,7 +169,7 @@ void Player::Pick(char const* itemName)
 	bool picked = false;
 	bool itemFound = false;
 
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < NUMBER_ITEMS; ++i)
 	{
 		if ((current_Room->getItemsPresent())[i] != nullptr)
 		{
@@ -256,15 +258,37 @@ void Player::Drop(char const* itemName)
 		cout << endl << itemName << " couldn't be dropped as it is not present in your bag.\n";
 }
 
+bool Player::tryUnlockPassage(){
+	const char * unlocker= "SHINY PIECE OF METAL";
+	for (int i = 0; i < NUMBER_ITEMS; ++i)
+	{
+		if ((current_Room->getItemsPresent())[i] != nullptr)
+		{
+			if (strcmp((((current_Room->getItemsPresent())[i])->getItemName()), unlocker) == 0)
+			{
+				cout << "Inspecting the " << unlocker << " revealed a Secret passage way!" <<endl;
+				return true;
+			}
+		}
+	}
+	cout << "\nI'm not sure what you are talking about." << endl;
+	return false;
+
+}
+bool Player::canUsePassage(){
+	return hasDiscoveredShortcut;
+}
 
 
+/* returns the name of the monster the player has slayed or
+returns null, meaning failuer.
 
-
-bool Player::Attack(char const* monsterName)
+*/
+const char * Player::Attack(char const* monsterName)
 {
-	bool killed = false;
-
-	if (current_Room->getMonsterPresent() != nullptr && strcmp(monsterName, current_Room->getMonsterPresent()->getMonsterName()) == 0)
+	char * killed = NULL;
+	//&& strcmp(monsterName, current_Room->getMonsterPresent()->getMonsterName()) == 0
+	if (current_Room->getMonsterPresent() != nullptr)
 	{
 		if (((current_Room->getMonsterPresent())->getLivingState()) == true)
 		{
@@ -274,13 +298,13 @@ bool Player::Attack(char const* monsterName)
 				{
 					(current_Room->getMonsterPresent())->setLivingState(false);
 					HelperFunctions::color(RED);
-					cout << monsterName << " has been killed.\n";
+					cout << current_Room->getMonsterPresent()->getMonsterName() << " has been killed.\n";
 
-					killed = true;
+					killed = current_Room->getMonsterPresent()->getMonsterName();
 				}
 			}
 
-			if (killed == false)
+			if (killed == NULL )
 			{
 				setCurrentState(false);
 				HelperFunctions::color(RED);

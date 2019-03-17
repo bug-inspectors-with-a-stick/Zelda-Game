@@ -33,6 +33,7 @@ void Castle::LinkRoomsWithOtherThings(Item** items, Monster** monsters, Princess
 	rooms[2].setWest(&rooms[1]);
 	if (items) {
 		rooms[2].setItemsPresent(0, items[3]);
+		rooms[2].setItemsPresent(1,items[5]); // with the thing
 	}
 
 
@@ -40,6 +41,7 @@ void Castle::LinkRoomsWithOtherThings(Item** items, Monster** monsters, Princess
 	rooms[3].setNorth(&rooms[0]);
 	if (items) {
 		rooms[3].setItemsPresent(0, items[1]);
+
 	}
 
 
@@ -98,6 +100,15 @@ void Castle::LinkRoom6and9()
 	rooms[8].setNorth(&rooms[5]);
 }
 
+// basically link any room to the princess room
+void Castle::LinkRoomXand9(const int x){
+	if(x>=0 && x<9){
+		rooms[x].setNorth(&rooms[8]);
+		rooms[8].setSouth(&rooms[x]);
+	}
+
+};
+
 
 
 void Castle::HiddenRoomsUnlocker(char const* monsterName, Monster** monsters)
@@ -111,7 +122,13 @@ void Castle::HiddenRoomsUnlocker(char const* monsterName, Monster** monsters)
 	{
 		LinkRoom6and9();
 	}
+
+	else if (! strcmp(monsterName,"Catacombs") ){
+		cout<< "\n\t As you look down the passage, you can see a candle light in the distance "<<endl;
+		LinkRoomXand9(2);
+	}
 }
+
 
 
 

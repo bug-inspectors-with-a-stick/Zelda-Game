@@ -8,11 +8,14 @@
 #include "Castle.h"
 #include "Player.h"
 
+
+#define NUMBER_ITEMS 6
+
 class Game
 {
 private:
 	Castle* 	castlePtr;
-	Item*		itemsPtr[5];
+	Item*		itemsPtr[NUMBER_ITEMS];
 	Princess*	princessPtr;
 	Monster* 	monstersPtr[2];
 	Player*		playerPtr;
